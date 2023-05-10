@@ -219,7 +219,7 @@
         path: 'project_db.json',
       });
 
-      const response = await octokit.repos.createOrUpdateFileContents({
+      /*const response = await octokit.repos.createOrUpdateFileContents({
         owner: 'bogdanmm20',
         repo: 'test',
         path: 'project_db.json',
@@ -228,7 +228,7 @@
         sha: existingFile.data.sha,
       });
       
-      console.log(`File uploaded to ${response.data.content.html_url}`);
+      console.log(`File uploaded to ${response.data.content.html_url}`);*/
     } catch (error) {
       console.error(`Error uploading file: ${error}`);
     }
