@@ -1,0 +1,46 @@
+{
+	"project":{
+		{
+		"id":"01",
+		"Project Name":"ICAS",
+		"DG-Number":"DG-077878",
+		"SWQ Report Name":"tba",
+		"QMP":"Mr.X",
+		"Product Line":"4",
+		"Project Category":"A"
+		},
+		{
+		"id":"02",
+		"Project Name":"Daimler Ramses 1.5",
+		"DG-Number":"DG-085321",
+		"SWQ Report Name":"tba",
+		"QMP":"Mr.Y",
+		"Product Line":"2",
+		"Project Category":"B"
+		}
+	},
+	"employee":{
+		{
+		"id":"01",
+		"Employee Name":"Mariuc Stefania",
+		"Location":"Iasi",
+		},
+		{
+		"id":"02",
+		"Employee Name":"Cotovanu Marius",
+		"Location":"Iasi"
+		}
+	},
+	"employee_to_project":{
+		{
+		"project_id":"01",
+		"employee_id":"01",
+		"effort_allocation":"80%"
+		},
+		{
+		"project_id":"02",
+		"employee_id":"02",
+		"effort_allocation":"50%"
+		}
+	}
+}

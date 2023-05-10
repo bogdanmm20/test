@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://getbootstrap.com/docs/5.2/examples/dashboard/# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>Resource Allocation</title>
+
+    <!--link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/"-->
+
+
+
+
+
+<link rel="stylesheet"  href="bootstrap.min.css" >
+<link rel="stylesheet"  href="choices.min.css" >
+<link rel="stylesheet"  href="font-awesome.min.css" >
+    <script type="text/javascript" src="bootstrap.bundle.min.js.download" ></script>
+    <script type="text/javascript" src="feather.min.js.download"></script>
+    <script type="text/javascript" src="Chart.min.js.download"></script>
+    <script type="text/javascript" src="dashboard.js.download"></script>
+    <script type="text/javascript" src="choices.min.js"></script>
+
+
+    <!-- Favicons -->
+<link rel="apple-touch-icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="manifest" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/manifest.json">
+<link rel="mask-icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
+<link rel="icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/favicon.ico">
+<meta name="theme-color" content="#712cf9">
+
+
+    <style>
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .bg-light {
+  background: #eef0f4;
+}
+
+.choices__list--dropdown .choices__item--selectable {
+  padding-right: 1rem;
+}
+
+.choices__list--single {
+  padding: 0;
+}
+
+.card {
+  transform: translateY(-10%);
+  transform: translateX(-100%%);
+}
+
+.choices[data-type*=select-one]:after {
+  right: 1.5rem;
+}
+
+.shadow {
+  box-shadow: 0.3rem 0.3rem 1rem rgba(178, 200, 244, 0.23);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s;
+}
+
+
+
+
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="dashboard.css" >
+  <style type="text/css">/* Chart.js */
+@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style></head>
+  <body>
+
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="https://getbootstrap.com/docs/5.2/examples/dashboard/#">Continental</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <input class="form-control basicAutoComplete form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search" id="search-bar">
+  <div class="navbar-nav">
+
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3 sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home align-text-bottom" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file align-text-bottom" aria-hidden="true"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+              Project View
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart align-text-bottom" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+              Employee View
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users align-text-bottom" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              Location View
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="add_project.html">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 align-text-bottom" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+              Add Project
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers align-text-bottom" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              Add Employee
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers align-text-bottom" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              Modify allocation
+            </a>
+          </li>
+        </ul>
+
+
+
+
+
+
+        </ul>
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div>
+    	<div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2" id="employee_header">employee_name</h1>
+        <button id="active_button" type="button" class="btn btn-primary">Active</button>
+      </div>
+
+       <div class="table-responsive" id="employee_info">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col"> </th>
+              <th scope="col"> </th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td><b><h6>Employee Name</h6></b></td>
+                <td contenteditable="true" id="employee_name_modify"> </td>
+              </tr>
+              <tr>
+                 <td><b><h6>UID</h6></b></td>
+                <td contenteditable="true" id="uid_modify"> </td>
+              </tr>
+               <tr>
+                 <td><b><h6>SWQ Team Leader</h6></b></td>
+                <td contenteditable="true" id="swq_tl_modify"> </td>
+              </tr>
+                <tr>
+                 <td><b><h6>Location</h6></b></td>
+                <td contenteditable="true" id="location_modify"> </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+      <br>
+
+      <div class="table-responsive" id="project_table">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Assigned Project</th>
+              <th scope="col">Effort Allocation</th>
+              <th scope="col">Unassign</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+      <br>
+
+
+   <section class="pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card border-0">
+                    <div class="card-body p-0">
+
+                        <!-- AUTO COMPLETE DROPDOWN -->
+                        <select id="selectProject" class="selectpicker form-control border-0 mb-1 px-4 py-4 rounded shadow" data-none-selected-text="">
+                            <option selected disabled>Select a project</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <br>
+
+<button id="assign_proj_button" type="button" class="btn btn-primary">Assign Project</button>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+ <section class="pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card border-0">
+                    <div class="card-body p-0">
+
+                        <!-- AUTO COMPLETE DROPDOWN -->
+                        <select class="selectyear form-control border-0 mb-1 px-4 py-4 rounded shadow" data-none-selected-text="">
+                            <option selected disabled>Select a year</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br>
+<br>
+
+<div class="table-responsive" id="effort_table" style="display: none;">
+  <table class="table table-striped table-sm" >
+    <thead>
+      <tr>
+        <th scope="col">Project Name</th>
+        <th scope="col">January</th>
+        <th scope="col">February</th>
+        <th scope="col">March</th>
+        <th scope="col">April</th>
+        <th scope="col">May</th>
+        <th scope="col">June</th>
+        <th scope="col">July</th>
+        <th scope="col">August</th>
+        <th scope="col">September</th>
+        <th scope="col">October</th>
+        <th scope="col">November</th>
+        <th scope="col">December</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+</div>
+    </main>
+
+
+
+
+
+	<script>
+
+  let jsonArray = [];
+  let projArray=[];
+  let proj_to_employee=[];
+  let employeeArray=[];
+  let printArray=[];
+    let cache;
+  let employee_name=null;
+  let header_employee=document.getElementById("employee_header");
+  let copyArray=[];
+  let savePickId;
+
+caches.open("user_cache").then((cache) => {
+  cache.match("selected-id").then((response) => {
+    if (response) {
+      response.text().then((text) => {
+        // Do something with the cached value
+        header_employee.textContent=text;
+        parseDB(text);
+      });
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+}).catch((error) => {
+  console.error(error);
+});
+
+
+
+
+
+ async function loadjson(jsonpath){
+   try {
+     const response = await fetch(jsonpath);
+     const data = await response.json();
+     jsonArray.push(data);
+     return jsonArray;
+   } catch (error) {
+     console.error(error);
+   }
+ }
+
+ async function parseDB(header_employee){
+   const jsonArray = await loadjson('project_db.json');
+   const dbArray=Object.values(jsonArray[0]);
+   console.log(dbArray);
+   let indexEmpl=0;
+   let indexProj=0;
+   let indexCross=0;
+   let indexEffort=0;
+   let pickID=" ";
+   let monthArray=["january","february","march","april","may","june","july","august","september","october","november","december"];
+
+
+   copyArray=dbArray;
+
+   for (let i=0;i<dbArray[1].length;i++){
+
+    if(dbArray[1][i].Employee_Name===header_employee){
+          pickID=dbArray[1][i].id;
+    }
+   }
+
+   let projIndex;
+   let empIndex;
+   for(let i=0;i<dbArray[3].length;i++){
+
+      if(dbArray[3][i].employee_id===pickID){
+        sumMonth=0;
+        for(let j=0;j<monthArray.length;j++){
+          sumMonth+=parseInt(dbArray[3][i][monthArray[j]]);
+        }
+        console.log(sumMonth);
+        for(let k=0;k<dbArray[2].length;k++){
+          if (dbArray[2][k].employee_id===pickID && dbArray[2][k].project_id===dbArray[3][i].project_id){
+            dbArray[2][k].effort_allocation=sumMonth/12;
+            const jsonString=JSON.stringify(dbArray,null,2);
+            console.log(jsonString);
+          }
+        }
+      }
+   }
+
+
+   savePickId=pickID;
+   for(let i=0;i<dbArray[2].length;i++){
+    if(dbArray[2][i].employee_id===pickID){
+      indexCross=i;
+      for (let j=0;j<dbArray[1].length;j++){
+        if (dbArray[1][j].id===dbArray[2][i].employee_id){
+          indexEmpl=j;
+        }
+      }
+      for (let k=0;k<dbArray[0].length;k++){
+        if(dbArray[0][k].DG_Number===dbArray[2][i].project_id){
+          indexProj=k;
+        }
+      }
+       printArray.push([dbArray[0][indexProj],dbArray[1][indexEmpl],dbArray[2][indexCross]]);
+      }
+   }
+
+   if(indexCross===0){
+     for(let i=0;i<dbArray[1].length;i++){
+      if(dbArray[1][i].id===pickID){
+        indexEmpl=i;
+      }
+     }
+     printArray.push([["NN"],dbArray[1][indexEmpl],["NN"]]);
+   }
+
+
+
+   console.log(printArray);
+
+   const employee_name_edit=document.getElementById("employee_name_modify");
+   const uid_edit=document.getElementById("uid_modify");
+   const swq_tl_edit=document.getElementById("swq_tl_modify");
+   const location_edit=document.getElementById("location_modify");
+
+
+
+   employee_name_edit.innerHTML=printArray[0][1].Employee_Name;
+   uid_edit.innerHTML=printArray[0][1].id;
+   swq_tl_edit.innerHTML=printArray[0][1].SWQ_TL;
+   location_edit.innerHTML=printArray[0][1].Location;
+
+   let cellsUser=document.querySelectorAll("#employee_info td[contenteditable]");
+
+     for (let i=0;i<cellsUser.length;i++){
+
+        cellsUser[i].addEventListener("click",function(){
+            let cellId=cellsUser[i].id;
+
+        });
+
+        cellsUser[i].addEventListener("blur",function(){
+            let cellId=cellsUser[i].id;
+            let cellModify=document.getElementById(cellId).textContent;
+
+            for (let i=0;i<dbArray[1].length;i++)
+            {
+              if(dbArray[1][i].id===pickID)
+              {
+                if(cellId==="employee_name_modify")
+                {
+                  dbArray[1][i].Employee_Name=cellModify;
+                }
+                else if(cellId==="uid_modify"){
+                  dbArray[1][i].id=cellModify;
+                }
+                else if(cellId==="swq_tl_modify"){
+                  dbArray[1][i].SWQ_TL=cellModify;
+                }
+                else if(cellId==="location_modify"){
+                  dbArray[1][i].Location=cellModify;
+                }
+
+              }
+            }
+
+        const jsonString=JSON.stringify(dbArray,null,2);
+
+
+        });
+
+
+     }
+
+   const table=document.getElementById("project_table").getElementsByTagName("tbody")[0];
+
+
+   for (let i=0;i<printArray.length;i++){
+     const flag=true;
+     const row=document.createElement("tr");
+     let employee_name;
+     let employee_id;
+     let location;
+     let assigned_project;
+     let effort_allocation;
+     let delete_button;
+
+      if(printArray[i][0][0]!="NN"){
+       assigned_project=`<td>${printArray[i][0].Project_Name}</td>`;
+       effort_allocation=`<td>${printArray[i][2].effort_allocation}%</td>`;
+       delete_button = `<td><button type="button" id="button_${printArray[i][0].DG_Number}" class="btn btn-primary">Unassign</button></td>`;
+      }
+      else{
+       assigned_project=`<td>No Project Assigned</td>`;
+       effort_allocation=`<td>No Allocated Effort </td>`;
+       delete_button = `<td>N/A</td>`;
+      }
+
+     row.innerHTML=assigned_project+effort_allocation+delete_button;
+
+     table.appendChild(row);
+   }
+
+
+   //Project Dropdown Menu
+
+   const select=document.querySelector('.selectpicker');
+
+  for (let i=0;i<dbArray[0].length;i++){
+
+    const option=document.createElement('option');
+    option.value=dbArray[0][i].Project_Name;
+    option.textContent=dbArray[0][i].Project_Name;
+    select.appendChild(option);
+
+  }
+
+
+const sortingchoices = new Choices(select, {
+    placeholder: true,
+    itemSelectText: ''
+});
+
+
+// Trick to apply your custom classes to generated dropdown menu
+let sortingClass = select.getAttribute('class');
+window.onload= function () {
+    select.parentElement.setAttribute('class', sortingClass);
+}
+
+let selectProject;
+select.addEventListener('change',function(){
+  selectProject=select.value;
+  console.log(selectProject);
+});
+
+const assignButton=document.getElementById("assign_proj_button");
+assignButton.addEventListener('click',function(){
+    let dgNumPick;
+
+    for(let i=0;i<dbArray[0].length;i++){
+        if(dbArray[0][i].Project_Name===selectProject){
+            dgNumPick=dbArray[0][i].DG_Number;
+        }
+    }
+
+    dbArray[2].push({"project_id":dgNumPick,"employee_id":pickID,"effort_allocation":"0"});
+    const currentYear=new Date().getFullYear();
+    dbArray[3].push({"employee_id":pickID,"project_id":dgNumPick,"year":currentYear.toString(),"january":"0","february":"0","march":"0","april":"0","may":"0","june":"0","july":"0","august":"0","september":"0","october":"0","november":"0","december":"0"});
+    const jsonString=JSON.stringify(dbArray,null,2);
+    console.log(jsonString);
+
+});
+
+  //Year Dropdown Menu
+
+  const year_select=document.querySelector('.selectyear');
+
+  for (let i=0;i<dbArray[3].length;i++){
+    if(i>0 && dbArray[3][i].year!=dbArray[3][i-1].year){
+     const option=document.createElement('option');
+    option.value=dbArray[3][i].year;
+    option.textContent=dbArray[3][i].year;
+    year_select.appendChild(option);
+  }
+  if (i===0){
+    const option=document.createElement('option');
+    option.value=dbArray[3][i].year;
+    option.textContent=dbArray[3][i].year;
+    year_select.appendChild(option);
+  }
+
+  }
+
+  const sortingyear = new Choices(year_select, {
+    placeholder: true,
+    itemSelectText: ''
+});
+
+
+// Trick to apply your custom classes to generated dropdown menu
+let sortingClassYear = year_select.getAttribute('class');
+window.onload= function () {
+    year_select.parentElement.setAttribute('class', sortingClass);
+}
+
+let selectYear;
+year_select.addEventListener('change',function(){
+  selectYear=year_select.value;
+  console.log(selectYear);
+
+  const show_table=document.getElementById("effort_table");
+  show_table.style.display="table";
+  const table_effort=document.getElementById("effort_table").getElementsByTagName("tbody")[0];
+
+   const list_months=[0,0,0,0,0,0,0,0,0,0,0,0];
+   let assigned_project;
+   let month;
+
+
+
+
+   for (let i=0;i<printArray.length;i++){
+      const row=document.createElement("tr");
+
+
+      if(i+1<=printArray.length && printArray[i][0][0]!="NN"){
+      assigned_project=`<td id="proj_${i+1}">${printArray[i][0].Project_Name}</td>`;
+      for (let j=0;j<dbArray[3].length;j++){
+        if(dbArray[3][j].employee_id===pickID && dbArray[3][j].project_id===printArray[i][0].DG_Number && dbArray[3][j].year===selectYear){
+          r_january=`<td contenteditable="true" id="january_${i+1}">${dbArray[3][j].january}%</td>`;
+          list_months[0]+=parseInt(dbArray[3][j].january);
+          r_february=`<td contenteditable="true" id="february_${i+1}">${dbArray[3][j].february}%</td>`;
+          list_months[1]+=parseInt(dbArray[3][j].february);
+          r_march=`<td contenteditable="true" id="march_${i+1}">${dbArray[3][j].march}%</td>`;
+          list_months[2]+=parseInt(dbArray[3][j].march);
+          r_april=`<td contenteditable="true" id="april_${i+1}">${dbArray[3][j].april}%</td>`;
+          list_months[3]+=parseInt(dbArray[3][j].april);
+          r_may=`<td contenteditable="true" id="may_${i+1}">${dbArray[3][j].may}%</td>`;
+          list_months[4]+=parseInt(dbArray[3][j].may);
+          r_june=`<td contenteditable="true" id="june_${i+1}">${dbArray[3][j].june}%</td>`;
+          list_months[5]+=parseInt(dbArray[3][j].june);
+          r_july=`<td contenteditable="true" id="july_${i+1}">${dbArray[3][j].july}%</td>`;
+          list_months[6]+=parseInt(dbArray[3][j].july);
+          r_august=`<td contenteditable="true" id="august_${i+1}">${dbArray[3][j].august}%</td>`;
+          list_months[7]+=parseInt(dbArray[3][j].august);
+          r_september=`<td contenteditable="true" id="september_${i+1}">${dbArray[3][j].september}%</td>`;
+          list_months[8]+=parseInt(dbArray[3][j].september);
+          r_october=`<td contenteditable="true" id="october_${i+1}">${dbArray[3][j].october}%</td>`;
+          list_months[9]+=parseInt(dbArray[3][j].october);
+          r_november=`<td contenteditable="true" id="november_${i+1}">${dbArray[3][j].november}%</td>`;
+          list_months[10]+=parseInt(dbArray[3][j].november);
+          r_december=`<td contenteditable="true" id="december_${i+1}">${dbArray[3][j].december}%</td>`;
+          list_months[11]+=parseInt(dbArray[3][j].december);
+          row.innerHTML=assigned_project+r_january+r_february+r_march+r_april+r_may+r_june+r_july+r_august+r_september+r_october+r_november+r_december;
+      }
+    }
+    }
+
+      table_effort.appendChild(row);
+
+   }
+
+   for(let ind=0;ind<list_months.length;ind++){
+     list_months[ind]+=20;
+   }
+
+   const row_extra=document.createElement("tr");
+
+   assigned_extra=`<td>Emails, Communication & Meetings</td>`;
+   row_extra.innerHTML=assigned_extra;
+   for(let ex=0;ex<list_months.length;ex++){
+     r_month=`<td>20%</td>`;
+     row_extra.innerHTML+=r_month;
+   }
+   table_effort.appendChild(row_extra);
+
+   const row=document.createElement("tr");
+
+   assigned_project=`<td>Total</td>`;
+   row.innerHTML=assigned_project;
+   for (let j=0;j<list_months.length;j++){
+     if(list_months[j]<=100){
+       r_month=`<td >${list_months[j]}%</td>`;
+       row.innerHTML+=r_month;
+     }else{
+       r_month=`<td style="background-color: #eb6e65;">${list_months[j]}%</td>`;
+       row.innerHTML+=r_month;
+     }
+   }
+     table_effort.appendChild(row);
+
+});
+
+
+
+
+
+
+     let cells=document.querySelectorAll("#effort_table td[contenteditable]");
+
+     for (let i=0;i<cells.length;i++){
+
+        cells[i].addEventListener("click",function(){
+            let cellId=cells[i].id;
+
+        });
+
+        cells[i].addEventListener("blur",function(){
+            let cellId=cells[i].id;
+            let cellEffort=document.getElementById(cellId).textContent;
+            for (let j=0;j<dbArray[3].length;j++){
+              let idSplitArray=cellId.split("_");
+              const month_id=idSplitArray[0];
+              const project_text=document.getElementById("proj_"+idSplitArray[1]).textContent;
+              let proj_id_extract=" ";
+
+              for (let k=0;k<dbArray[0].length;k++){
+                if(project_text===dbArray[0][k].Project_Name)
+                {
+                  proj_id_extract=dbArray[0][k].DG_Number;
+                }
+              }
+
+              if(dbArray[3][j].project_id===proj_id_extract && dbArray[3][j].employee_id===pickID ){
+
+                  dbArray[3][j][month_id]=cellEffort;
+              }
+            }
+
+        const jsonString=JSON.stringify(dbArray,null,2);
+
+
+        });
+     }
+
+     var activeButton=document.getElementById("active_button");
+     for (let i=0;i<dbArray[1].length;i++){
+       if (dbArray[1][i].status_employee==="active"){
+        activeButton.textContent="Make Employee Inactive";
+      }
+      else{
+         activeButton.textContent="Make Employee Active";
+      }
+     }
+
+
+ }
+
+ //parseDB();
+
+ const projectDropdown=document.getElementById('project_dropdown');
+ const searchBar=document.getElementById('search-bar');
+ const tableRows=document.querySelectorAll('#project_table tbody tr');
+ let selectID;
+
+ searchBar.addEventListener("input",function(){
+       const searchValue=searchBar.value;
+       const tableRows=document.querySelectorAll('#project_table tbody tr');
+       tableRows.forEach(row => {
+         const rowText=row.textContent.toLowerCase();
+         for (let i=0;i<printArray.length;i++){
+           if(printArray[i][1].Employee_Name.toLowerCase().includes(searchValue)){
+             selectID=printArray[i][1].id;
+           }
+         }
+         if (rowText.includes(searchValue)){
+           row.style.display='';
+         } else{
+           row.style.display='none';
+         }
+         });
+   });
+
+
+     document.addEventListener('click',function(event){
+        if(event.target.tagName==='BUTTON'){
+          let month_name_array=["january","february","march","april","may","june","july","august","september","october","november","december"];
+          var assignID=event.target.getAttribute('id');
+          if (assignID!="assign_proj_button" && assignID!="active_button"){
+          let arrayButtonID=assignID.split("_");
+          let selectDG=arrayButtonID[1];
+
+          for (let i=0;i<copyArray[2].length;i++){
+            if(copyArray[2][i].project_id===selectDG && copyArray[2][i].employee_id===savePickId){
+              copyArray[2].splice(i,1);
+
+            }
+          }
+           for(let j=0;j<copyArray[3].length;j++){
+                if(copyArray[3][j].project_id===selectDG && copyArray[3][j].employee_id===savePickId){
+                    var currentDate=new Date();
+                    var currentMonth=currentDate.getMonth()+1;
+                    for(indexDate=currentMonth;indexDate<month_name_array.length;indexDate++){
+                        copyArray[3][j][month_name_array[indexDate]]="0";
+                    }
+              }
+            }
+          const jsonString=JSON.stringify(copyArray,null,2);
+
+        }
+        }
+     });
+
+     var activeButton=document.getElementById("active_button");
+     activeButton.addEventListener('click',function(){
+         for(let i=0;i<copyArray[1].length;i++){
+
+            if(copyArray[1][i].id===savePickId){
+              if(copyArray[1][i].status_employee==="active"){
+                console.log(copyArray[1][i]);
+              copyArray[1][i].status_employee="inactive";
+              activeButton.textContent="Make Employee Active";
+              break;
+            }
+            if(copyArray[1][i].status_employee==="inactive"){
+            copyArray[1][i].status_employee="active";
+            activeButton.textContent="Make Employee Inactive";
+            break;
+          }
+            }
+         }
+         const jsonString=JSON.stringify(copyArray,null,2);
+         console.log(jsonString);
+     });
+
+
+	</script>
+
+</body></html>

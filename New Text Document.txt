@@ -1,0 +1,78 @@
+Creat JSON pentru Project DB, Employee DB, Location DB -> done
+Creat functie JS care pune json sub forma de tabel pe pagina -> done
+Creat Search button care cauta proiect/employee in JSON DB si pune informatia pe pagina -> done
+Pagina pentru Inserare angajat nou -> in working
+Pagina pentru Inserare proiect nou -> done, de adaugat si SWQ TL ca si camp
+Pagina pentru fiecare angajat pentru a edita load-ul
+Pagina pentru Asignare proiecte pentru un Employee
+
+--------------------!!!!!!!!!!!!!!!!!!!!!-----------------------------
+de printat tot ce este din json in tabel -> done
+de facut hide la liniile care nu coincid cu ce scriu in search bar -> done
+de inclus un export to excel button
+de facut copy paste la paginile pentru Location si Employee
+de adaugat proiect nou form -> done
+de adaugat angajat nou form
+de editat alocare angajat pe proiecte -> de creat pagina lui proprie pe care o accesezi din hyperlink cand apesi pe numele lui
+si de facut update in json care sa contina numele paginii lui html cu buton de plus, dropdown cu numele proiectelor si edit percentage si delete button
+
+async function parseDB(project_name){
+  const jsonArray = await loadjson('project_db.json');
+  const dbArray=Object.values(jsonArray[0]);
+  for(let i=0;i<dbArray[0].length;i++){
+
+      if (dbArray[0][i].Project_Name.toLowerCase().includes(project_name.toLowerCase())){
+        selectArray.push(dbArray[0][i].Project_Name);
+      }
+  }
+
+}
+
+Notite de la Oana
+Sa incluzi Q TL in project view
+Sa incluzi PL2 in loc de 2
+
+-> archiving projects
+-> delete just for super users, not anyone
+-> future projects that are at G20
+
+Notite 31 Martie
+de facut Pagina pentru a face Active si Inactive un proiect sau as putea sa fac o pagina a proiectului la fel ca si pentru Angajat hmm interesant
+de facut un buton de eliminare a unui Q din grup
+O pagina pentru Arhivare a proiectelor si de vazut un istoric pentru ele
+butonul pentru export in Excel -> done
+de sortat print Array dupa angajat -> done
+de facut o optiune ca doar super users sa poata modifica, sterge chestii
+de facut un dropdown pentru ani in pagina angajatului
+de facut sistemul ala cu spikes si de pus o coloana noua in tabel
+in caz ca trebuie sa apesi un user care e posibil sa aiba 2 UID-uri sa fie un pop up screen care zice ce vrei X sau Y
+
+Prio pages
+1.user_page.html (3 h) -> done
+2.project_page.html (1 h) -> done
+3. project_view.html (1 h) -> done
+4. employee_view.html (1 h) -> done
+5. location_view.html (1 h) -> done
+6. archive_employee.html (15 min) -> done
+7. archive_project.html (15 min) -> done
+8. archive_location.html (15 min) -> done
+9. add_employee.html (5 min) -> done
+10. add_project.html (5 min) -> done
+11. design improvement (3 h)
+12. integrare confluence (8 h)
+13. super users option ca doar ei sa editeze (4 h)
+
+Prio 1
+->preluare estimare efort din tabelul din JSON -> done doar ca trebuie pus json upload at cand fac cu confluence
+-> editare in tabel si salvare in tabelul din JSON -> done
+->dropdown menu cu proiectele sa aiba un search ca sa citeasca mai usor -> done
+-> dropdown menu pentru ani -> done
+-> tabel editabil pentru angajat, ca sa editeze informatii despre el/ea -> done
+-> sa salveze informatiile editate si sa le transfere in JSON -> done
+-> de implementat un algoritm care calculeaza totalul din fiecare luna -> done
+-> de creat un sistem pentru Spikes care noteaza cu rosu daca timp de o luna angajatul e overloaded -> done
+-> de activat butonul unassign care sterge un proiect asignat unui angajat -> done
+-> de activat butonul assign project care adauga un proiect pentru un angajat -> done
+-> de adaugat un buton de Active/Inactive pentru angajat (1 h) -> done
+-> de facut o medie pentru fiecare luna pe proiect si sa o asignezi (30 min) -> done
+->de printat bazat pe Select a year tabelul ala cu efort (1.5 h) -> done

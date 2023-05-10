@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://getbootstrap.com/docs/5.2/examples/dashboard/# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>Resource Allocation</title>
+
+    <!--link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/dashboard/"-->
+
+
+
+
+
+<link rel="stylesheet"  href="bootstrap.min.css" >
+
+
+    <!-- Favicons -->
+<link rel="apple-touch-icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="manifest" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/manifest.json">
+<link rel="mask-icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
+<link rel="icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/favicon.ico">
+<meta name="theme-color" content="#712cf9">
+
+
+    <style>
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .bg-light {
+  background: #eef0f4;
+}
+
+.choices__list--dropdown .choices__item--selectable {
+  padding-right: 1rem;
+}
+
+.choices__list--single {
+  padding: 0;
+}
+
+.card {
+  transform: translateY(-10%);
+  transform: translateX(-20%);
+}
+
+.choices[data-type*=select-one]:after {
+  right: 1.5rem;
+}
+
+.shadow {
+  box-shadow: 0.3rem 0.3rem 1rem rgba(178, 200, 244, 0.23);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s;
+}
+
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="dashboard.css" >
+  <style type="text/css">/* Chart.js */
+@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style></head>
+  <body>
+
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="https://getbootstrap.com/docs/5.2/examples/dashboard/#">Continental</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <input class="form-control basicAutoComplete form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search" id="search-bar">
+  <div class="navbar-nav">
+
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3 sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home align-text-bottom" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file align-text-bottom" aria-hidden="true"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+              Project View
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart align-text-bottom" aria-hidden="true"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+              Employee View
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users align-text-bottom" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              Location View
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="add_project.html">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2 align-text-bottom" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+              Add Project
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers align-text-bottom" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              Add Employee
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers align-text-bottom" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              Modify allocation
+            </a>
+          </li>
+        </ul>
+
+
+
+
+
+
+        </ul>
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div>
+      <div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2" id="employee_header">project_name</h1>
+
+      </div>
+
+      <div class="table-responsive" id="project_info">
+       <table class="table table-striped table-sm">
+         <thead>
+           <tr>
+             <th scope="col"> </th>
+             <th scope="col"> </th>
+           </tr>
+         </thead>
+         <tbody>
+             <tr>
+               <td><b><h6>Project Name</h6></b></td>
+               <td contenteditable="true" id="project_name_modify"> </td>
+             </tr>
+             <tr>
+                <td><b><h6>DG_Number</h6></b></td>
+               <td contenteditable="true" id="dg_number_modify"> </td>
+             </tr>
+              <tr>
+                <td><b><h6>SWQ Report Name</h6></b></td>
+               <td contenteditable="true" id="swq_report_modify"> </td>
+             </tr>
+               <tr>
+                <td><b><h6>QMP</h6></b></td>
+               <td contenteditable="true" id="qmp_modify"> </td>
+             </tr>
+             <tr>
+              <td><b><h6>Product Line</h6></b></td>
+             <td contenteditable="true" id="product_line_modify"> </td>
+           </tr>
+           <tr>
+            <td><b><h6>Project Category</h6></b></td>
+           <td contenteditable="true" id="proj_categ_modify"> </td>
+         </tr>
+         </tbody>
+       </table>
+     </div>
+
+      <div class="table-responsive" id="project_table">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+               <th scope="col">Employee Name</th>
+              <th scope="col">Location</th>
+              <th scope="col">Effort Allocation</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+      <br>
+
+
+<button id="active_button" type="button" class="btn btn-primary">Active</button>
+    </main>
+  </div>
+</div>
+
+  <script>
+
+  let jsonArray = [];
+  let projArray=[];
+  let proj_to_employee=[];
+  let employeeArray=[];
+  let printArray=[];
+    let cache;
+  let employee_name=null;
+  let header_employee=document.getElementById("employee_header");
+  let copyArray=[];
+  let savePickId;
+
+caches.open("user_cache").then((cache) => {
+  cache.match("selected-id").then((response) => {
+    if (response) {
+      response.text().then((text) => {
+        console.log(text);
+        // Do something with the cached value
+        header_employee.textContent=text;
+        parseDB(text);
+      });
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+}).catch((error) => {
+  console.error(error);
+});
+
+
+
+
+
+ async function loadjson(jsonpath){
+   try {
+     const response = await fetch(jsonpath);
+     const data = await response.json();
+     jsonArray.push(data);
+     return jsonArray;
+   } catch (error) {
+     console.error(error);
+   }
+ }
+
+ async function parseDB(header_project){
+   const jsonArray = await loadjson('project_db.json');
+   const dbArray=Object.values(jsonArray[0]);
+   console.log(dbArray);
+   copyArray=dbArray;
+   let indexEmpl=0;
+   let indexProj=0;
+   let indexCross=0;
+   let pickID=" ";
+
+   for (let i=0;i<dbArray[1].length;i++){
+
+    if(dbArray[0][i].Project_Name===header_project){
+          pickID=dbArray[0][i].DG_Number;
+    }
+   }
+
+   savePickId=pickID;
+   console.log(pickID);
+
+   for(let i=0;i<dbArray[2].length;i++){
+    if(dbArray[2][i].project_id===pickID){
+      indexCross=i;
+      for (let j=0;j<dbArray[0].length;j++){
+        if (dbArray[0][j].DG_Number===dbArray[2][i].project_id){
+          indexProj=j;
+        }
+      }
+      for (let k=0;k<dbArray[1].length;k++){
+        if(dbArray[1][k].id===dbArray[2][i].employee_id){
+          indexEmpl=k;
+        }
+      }
+       printArray.push([dbArray[0][indexProj],dbArray[1][indexEmpl],dbArray[2][indexCross]]);
+    }
+
+   }
+
+
+
+   console.log(printArray);
+
+   const project_name_edit=document.getElementById("project_name_modify");
+   const dg_number_edit=document.getElementById("dg_number_modify");
+   const swq_report_edit=document.getElementById("swq_report_modify");
+   const qmp_edit=document.getElementById("qmp_modify");
+   const product_line_edit=document.getElementById("product_line_modify");
+   const proj_categ_edit=document.getElementById("proj_categ_modify");
+
+   project_name_edit.innerHTML=printArray[0][0].Project_Name;
+   dg_number_edit.innerHTML=printArray[0][0].DG_Number;
+   swq_report_edit.innerHTML=printArray[0][0].SWQ_Report_Name;
+   qmp_edit.innerHTML=printArray[0][0].QMP;
+   product_line_edit.innerHTML=printArray[0][0].Product_Line;
+   proj_categ_edit.innerHTML=printArray[0][0].Project_Category;
+
+
+   let cellsUser=document.querySelectorAll("#project_info td[contenteditable]");
+
+     for (let i=0;i<cellsUser.length;i++){
+
+        cellsUser[i].addEventListener("click",function(){
+            let cellId=cellsUser[i].id;
+
+        });
+
+        cellsUser[i].addEventListener("blur",function(){
+            let cellId=cellsUser[i].id;
+            let cellModify=document.getElementById(cellId).textContent;
+
+            for (let i=0;i<dbArray[0].length;i++)
+            {
+              if(dbArray[0][i].DG_Number===pickID)
+              {
+                if(cellId==="project_name_modify")
+                {
+                  dbArray[0][i].Project_Name=cellModify;
+                }
+                else if(cellId==="dg_number_modify"){
+                  dbArray[0][i].DG_Number=cellModify;
+                }
+                else if(cellId==="swq_report_modify"){
+                  dbArray[0][i].SWQ_Report_Name=cellModify;
+                }
+                else if(cellId==="qmp_modify"){
+                  dbArray[0][i].QMP=cellModify;
+                }
+                else if(cellId==="product_line_modify"){
+                  dbArray[0][i].Product_Line=cellModify;
+                }
+                else if(cellId==="proj_categ_modify"){
+                  dbArray[0][i].Project_Category=cellModify;
+                }
+
+              }
+            }
+
+        const jsonString=JSON.stringify(dbArray,null,2);
+        console.log(jsonString);
+
+        });
+
+
+     }
+
+   const table=document.getElementById("project_table").getElementsByTagName("tbody")[0];
+
+   for (let i=0;i<printArray.length;i++){
+     const flag=true;
+     const row=document.createElement("tr");
+     let employee_name;
+     let employee_id;
+     let location;
+     let assigned_project;
+     let effort_allocation;
+     let delete_button;
+
+       employee_name=`<td>${printArray[i][1].Employee_Name}</td>`;
+       location=`<td>${printArray[i][1].Location}</td>`;
+       effort_allocation=`<td>${printArray[i][2].effort_allocation}</td>`;
+
+
+     row.innerHTML=employee_name+location+effort_allocation;
+
+     table.appendChild(row);
+   }
+
+   var activeButton=document.getElementById("active_button");
+   for (let i=0;i<dbArray[0].length;i++){
+     if (dbArray[0][i].status_project==="active"){
+      activeButton.textContent="Make Project Inactive";
+    }
+    else{
+       activeButton.textContent="Make Project Active";
+    }
+   }
+   activeButton.addEventListener('click',function(){
+       for(let i=0;i<copyArray[0].length;i++){
+
+          if(copyArray[0][i].DG_Number===savePickId){
+            if(copyArray[0][i].status_project==="active"){
+              console.log(copyArray[0][i]);
+              copyArray[0][i].status_project="inactive";
+              activeButton.textContent="Make Project Active";
+              break;
+          }
+          if(copyArray[0][i].status_project==="inactive"){
+            copyArray[0][i].status_project="active";
+            activeButton.textContent="Make Project Inactive";
+            break;
+        }
+          }
+       }
+       const jsonString=JSON.stringify(copyArray,null,2);
+       console.log(jsonString);
+   });
+
+ }
+
+ //parseDB();
+
+ const projectDropdown=document.getElementById('project_dropdown');
+ const searchBar=document.getElementById('search-bar');
+ const tableRows=document.querySelectorAll('#project_table tbody tr');
+ let selectID;
+
+ searchBar.addEventListener("input",function(){
+       const searchValue=searchBar.value;
+       console.log(searchValue);
+       const tableRows=document.querySelectorAll('#project_table tbody tr');
+       tableRows.forEach(row => {
+         const rowText=row.textContent.toLowerCase();
+         for (let i=0;i<printArray.length;i++){
+           if(printArray[i][1].Employee_Name.toLowerCase().includes(searchValue)){
+             selectID=printArray[i][1].id;
+           }
+         }
+         if (rowText.includes(searchValue)){
+           row.style.display='';
+         } else{
+           row.style.display='none';
+         }
+         });
+   });
+
+
+
+
+  </script>
+
+
+    <script type="text/javascript" src="bootstrap.bundle.min.js.download" ></script>
+    <script type="text/javascript" src="feather.min.js.download"></script>
+    <script type="text/javascript" src="Chart.min.js.download"></script>
+    <script type="text/javascript" src="dashboard.js.download"></script>
+      }
+
+
+</body></html>
