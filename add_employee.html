@@ -212,7 +212,7 @@
 	  
   console.log(octokit.auth);
 
-    try {
+ 
       const fileContents = await octokit.rest.repos.getContent({
   owner: 'bogdanmm20',
   repo: 'test',
@@ -227,19 +227,7 @@ if (fileContents) {
   // Do something with the file contents
 }
 
-      /*const response = await octokit.repos.createOrUpdateFileContents({
-        owner: 'bogdanmm20',
-        repo: 'test',
-        path: 'project_db.json',
-        message: 'Updated project_db.json',
-        content: Buffer.from(JSON.stringify(jsonArray)).toString('base64'),
-        sha: existingFile.data.sha,
-      });
-      
-      console.log(`File uploaded to ${response.data.content.html_url}`);*/
-    } catch (error) {
-      console.error(`Error uploading file: ${error}`);
-    }
+     
 
 	  
     document.getElementById("add_employee").reset();
