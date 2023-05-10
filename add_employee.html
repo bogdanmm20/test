@@ -205,27 +205,46 @@
 
     const jsonArray = [{"Employee_Name":employee_name, "id":employee_id, "Location":location, "SWQ_TL":swq_tl, "status_employee":"active"}];
 
-    const octokit = new Octokit({
-      auth: "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",
-  userAgent: "test",
-    });
-	  
-  console.log(octokit.auth);
+    
+ const { Octokit } = require("@octokit/rest");
 
- 
-      const fileContents = await octokit.rest.repos.getContent({
-  owner: 'bogdanmm20',
-  repo: 'test',
-  path: 'project_db.json'
-})
-.catch(error => {
-  console.error(`Error getting file contents: ${error}`);
+// Initialize the Octokit client with your access token
+const octokit = new Octokit({ auth: "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" });
+
+// Define the owner, repo, and path to the JSON file you want to update
+const owner = "bogdanmm20";
+const repo = "test";
+const path = "project_db.json";
+
+// Retrieve the current contents of the JSON file from GitHub
+const response = await octokit.repos.getContents({
+  owner,
+  repo,
+  path,
 });
-if (fileContents) {
-  const content = Buffer.from(fileContents.data.content, 'base64').toString('utf-8');
-  console.log(content);
-  // Do something with the file contents
-}
+
+// Decode the base64-encoded content of the file
+const content = Buffer.from(response.data.content, "base64").toString();
+
+// Parse the JSON content into an object
+const data = JSON.parse(content);
+
+// Update the object with your new data
+const newArray = ["new", "data", "goes", "here"];
+data.array = newArray;
+
+// Encode the updated object as a JSON string
+const updatedContent = JSON.stringify(data);
+
+// Update the contents of the file on GitHub with the new data
+await octokit.repos.createOrUpdateFileContents({
+  owner,
+  repo,
+  path,
+  message: "Update data in JSON file",
+  content: Buffer.from(updatedContent).toString("base64"),
+  sha: response.data.sha,
+});
 
      
 
