@@ -209,13 +209,25 @@
      const octokit = new Octokit({
   auth: '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'
 });
+     const accessToken='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';
 
-await octokit.request('PUT https://github.com/bogdanmm20/test/blob/main/project_db.json',
-  content: JSON.stringify(jsonArray,null,2),
-  headers: {
-    'X-GitHub-Api-Version': '2022-11-28'
-  }
-});
+var uploadURL ="https://github.com/bogdanmm20/test/blob/main/project_db.json" + accessToken;
+
+console.log(uploadURL);
+
+$.ajax({
+  type: "POST",
+  url: uploadURL,
+  contentType: "application/json",
+  dataType: "json",
+  data: JSON.stringify({
+      "content": JSON.stringify(jsonArray,null,2),
+      "encoding": "utf-8"
+    })
+})
+  .done(function( data ) {
+    console.log( data );
+  });
 
         document.getElementById("add_employee").reset();
 
