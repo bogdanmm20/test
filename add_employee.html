@@ -229,8 +229,10 @@ const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/cont
 // Parse the response JSON
 const data = await response.json();
 
-// Decode the base64-encoded content of the file
-const content = JSON.parse(atob(data.content));
+const decodedContent = decodeURIComponent(escape(window.atob(data.content)));
+
+// Parse the JSON content into an object
+const content = JSON.parse(decodedContent);
 
 // Update the JSON object with your new data
 const newArray = ["new", "data", "goes", "here"];
