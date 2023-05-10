@@ -16,6 +16,7 @@
 
 <link rel="stylesheet"  href="bootstrap.min.css" >
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="./node_modules/@octokit/rest/dist/octokit-rest.min.js"></script>
 
 
     <!-- Favicons -->
@@ -211,39 +212,45 @@
 // Initialize the Octokit client with your access token
 const octokit = new Octokit({ auth: "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" });
 
-// Define the owner, repo, and path to the JSON file you want to update
+const accessToken = "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";
 const owner = "bogdanmm20";
 const repo = "test";
 const path = "project_db.json";
 
-// Retrieve the current contents of the JSON file from GitHub
-const response = await octokit.repos.getContents({
-  owner,
-  repo,
-  path,
+// Fetch the current contents of the file from GitHub
+const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  },
 });
 
+// Parse the response JSON
+const data = await response.json();
+
 // Decode the base64-encoded content of the file
-const content = Buffer.from(response.data.content, "base64").toString();
+const content = JSON.parse(atob(data.content));
 
-// Parse the JSON content into an object
-const data = JSON.parse(content);
-
-// Update the object with your new data
+// Update the JSON object with your new data
 const newArray = ["new", "data", "goes", "here"];
-data.array = newArray;
+content.array = newArray;
 
-// Encode the updated object as a JSON string
-const updatedContent = JSON.stringify(data);
+// Encode the updated object as a base64 string
+const updatedContent = btoa(JSON.stringify(content));
 
 // Update the contents of the file on GitHub with the new data
-await octokit.repos.createOrUpdateFileContents({
-  owner,
-  repo,
-  path,
-  message: "Update data in JSON file",
-  content: Buffer.from(updatedContent).toString("base64"),
-  sha: response.data.sha,
+await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+  method: "PUT",
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    message: "Update data in JSON file",
+    content: updatedContent,
+    sha: data.sha,
+  }),
 });
 
      
