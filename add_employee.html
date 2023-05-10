@@ -213,11 +213,19 @@
   console.log(octokit.auth);
 
     try {
-      const existingFile = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-        owner: 'bogdanmm20',
-        repo: 'test',
-        path: 'project_db.json',
-      });
+      const fileContents = await octokit.rest.repos.getContent({
+  owner: 'bogdanmm20',
+  repo: 'test',
+  path: 'project_db.json'
+})
+.catch(error => {
+  console.error(`Error getting file contents: ${error}`);
+});
+if (fileContents) {
+  const content = Buffer.from(fileContents.data.content, 'base64').toString('utf-8');
+  console.log(content);
+  // Do something with the file contents
+}
 
       /*const response = await octokit.repos.createOrUpdateFileContents({
         owner: 'bogdanmm20',
