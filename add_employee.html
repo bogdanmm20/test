@@ -208,6 +208,8 @@
     const octokit = new Octokit({
       auth: "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"
     });
+	  
+  console.log(octokit.auth);
 
     try {
       const existingFile = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
