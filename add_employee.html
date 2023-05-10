@@ -216,19 +216,19 @@ var uploadURL ="https://bogdanmm20.github.io/test/project_db.json" +"?"+ accessT
 
 console.log(uploadURL);
 
-$.ajax({
-  type: "POST",
-  url: uploadURL,
-  contentType: "application/json",
-  dataType: "json",
-  data: JSON.stringify({
-      "content": JSON.stringify(jsonArray,null,2),
-      "encoding": "utf-8"
-    })
-})
-  .done(function( data ) {
-    console.log( data );
+try {
+  const response = await octokit.repos.createOrUpdateFileContents({
+    owner: 'bogdanmm20',
+    repo: 'test',
+    path: 'project_db.json',
+    message: 'Updated project_db.json',
+    content: Buffer.from(jsonArray).toString('base64'),
+    sha: existingFile.data.sha, // The SHA of the existing file, retrieved in step 5
   });
+  console.log(`File uploaded to ${response.data.content.html_url}`);
+} catch (error) {
+  console.error(`Error uploading file: ${error}`);
+}
 
         document.getElementById("add_employee").reset();
 
