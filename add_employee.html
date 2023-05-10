@@ -195,47 +195,45 @@
 	<script type="module">
   import { Octokit } from "https://cdn.skypack.dev/@octokit/core";
 
+  document.getElementById("add_employee").addEventListener("submit", async function(event) {
+    event.preventDefault();
 
-  document.getElementById("add_employee").addEventListener("submit",function(event){
-      const jsonpath="project_db.json";
-      event.preventDefault();
+    const employee_name = document.getElementById("employee_name").value;
+    const employee_id = document.getElementById("user_id").value;
+    const location = document.getElementById("location").value;
+    const swq_tl = document.getElementById("swq_tl").value;
 
-      const employee_name=document.getElementById("employee_name").value;
-      const employee_id=document.getElementById("user_id").value;
-      const location=document.getElementById("location").value;
-      const swq_tl=document.getElementById("swq_tl").value;
+    const jsonArray = [{"Employee_Name":employee_name, "id":employee_id, "Location":location, "SWQ_TL":swq_tl, "status_employee":"active"}];
 
-     let jsonArray=[{"Employee_Name":employee_name,"id":employee_id,"Location":location,"SWQ_TL":swq_tl,"status_employee":"active"}];
-
-     const octokit = new Octokit({
-  auth: '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'
-});
-     const accessToken='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';
-
-var uploadURL ="https://bogdanmm20.github.io/test/project_db.json" +"?"+ accessToken;
-
-console.log(uploadURL);
-
-try {
-  const response = await octokit.repos.createOrUpdateFileContents({
-    owner: 'bogdanmm20',
-    repo: 'test',
-    path: 'project_db.json',
-    message: 'Updated project_db.json',
-    content: Buffer.from(jsonArray).toString('base64'),
-    sha: existingFile.data.sha, // The SHA of the existing file, retrieved in step 5
-  });
-  console.log(`File uploaded to ${response.data.content.html_url}`);
-} catch (error) {
-  console.error(`Error uploading file: ${error}`);
-}
-
-        document.getElementById("add_employee").reset();
-
+    const octokit = new Octokit({
+      auth: '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'
     });
 
+    try {
+      const existingFile = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+        owner: 'bogdanmm20',
+        repo: 'test',
+        path: 'project_db.json',
+      });
 
-	</script>
+      const response = await octokit.repos.createOrUpdateFileContents({
+        owner: 'bogdanmm20',
+        repo: 'test',
+        path: 'project_db.json',
+        message: 'Updated project_db.json',
+        content: Buffer.from(JSON.stringify(jsonArray)).toString('base64'),
+        sha: existingFile.data.sha,
+      });
+      
+      console.log(`File uploaded to ${response.data.content.html_url}`);
+    } catch (error) {
+      console.error(`Error uploading file: ${error}`);
+    }
+
+    document.getElementById("add_employee").reset();
+  });
+</script>
+
 
 
     <script type="text/javascript" src="bootstrap.bundle.min.js.download" ></script>
